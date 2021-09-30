@@ -4,7 +4,7 @@ extends Node
 var config
 
 
-func _ready():
+func _init():
 	config = ConfigFile.new()
 	var err = config.load("res://Shared/constants.ini")
 	
