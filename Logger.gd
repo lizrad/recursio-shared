@@ -323,7 +323,7 @@ var default_configfile_path = "user://%s.cfg" % PLUGIN_NAME
 var output_format = "[{TIME}] [{LVL}] [{MOD}]{ERR_MSG} {MSG}"
 # Example with all supported placeholders: "YYYY.MM.DD hh.mm.ss"
 # would output e.g.: "2020.10.09 12:10:47".
-var time_format = "hh:mm:ss"
+var time_format = "hh:mm:ss.ms"
 
 # Holds the name of the debug module for easy usage across all logging functions.
 var default_module_name = "main"
@@ -546,6 +546,8 @@ func get_default_output_level():
 # * ss = Seconds
 func get_formatted_datetime():
 	var datetime = OS.get_datetime()
+	var ms = OS.get_system_time_msecs() % 1000
+	#var ms = OS.get_ticks_msec() % 1000
 	var result = time_format
 	result = result.replacen("YYYY", "%04d" % [datetime.year])
 	result = result.replacen("MM", "%02d" % [datetime.month])
@@ -553,6 +555,7 @@ func get_formatted_datetime():
 	result = result.replacen("hh", "%02d" % [datetime.hour])
 	result = result.replacen("mm", "%02d" % [datetime.minute])
 	result = result.replacen("ss", "%02d" % [datetime.second])
+	result = result.replacen("ms", "%03d" % [ms])
 	return result
 
 
