@@ -10,8 +10,8 @@ var dashing = false
 func init(gameplay_record: Dictionary):
 	_record = gameplay_record.duplicate(true)
 
-func start_replay():
-	_start_time = Server.get_server_time()
+func start_replay(start_time):
+	_start_time = start_time
 	_replaying = true
 	_current_frame = 0
 
