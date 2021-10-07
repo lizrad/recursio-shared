@@ -27,3 +27,7 @@ func get_spawn_points(player_number):
 	else:
 		Logger.error("Tried to get spawn positions for invalid node " + node_name)
 		return null
+
+
+func get_capture_points():
+	return $CapturePoints.get_children()
