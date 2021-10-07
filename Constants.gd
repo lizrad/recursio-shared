@@ -17,6 +17,8 @@ const WEAPON_END = 4
 const GUN = 0
 const WALL = 1
 
+enum ActionType { SHOOT, DASH, MELEE }
+
 func _init():
 	config = ConfigFile.new()
 	var err = config.load("res://Shared/constants.ini")
