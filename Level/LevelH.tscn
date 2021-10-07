@@ -46,3 +46,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 
 [node name="Spawn3" type="Position3D" parent="Player2Spawns"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+
+[node name="CapturePoints" type="Spatial" parent="."]
+
+[node name="CapturePoint1" type="Position3D" parent="CapturePoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+
+[node name="CapturePoint2" type="Position3D" parent="CapturePoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
