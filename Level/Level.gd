@@ -3,7 +3,7 @@ extends Spatial
 
 # Scene to add  to the capture points for logic
 export var capture_point_scene: PackedScene
-
+var _capture_points =[]
 
 func _ready():
 	if not capture_point_scene:
@@ -13,6 +13,7 @@ func _ready():
 		for point in $CapturePoints.get_children():
 			var new_scene = capture_point_scene.instance()
 			new_scene.global_transform = point.global_transform
+			_capture_points.append(new_scene)
 			add_child(new_scene)
 
 
@@ -30,4 +31,4 @@ func get_spawn_points(player_number):
 
 
 func get_capture_points():
-	return $CapturePoints.get_children()
+	return _capture_points
