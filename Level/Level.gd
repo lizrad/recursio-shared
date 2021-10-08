@@ -16,6 +16,9 @@ func _ready():
 			_capture_points.append(new_scene)
 			add_child(new_scene)
 
+func reset():
+	for capture_point in _capture_points:
+		capture_point.reset()
 
 func get_spawn_points(player_number):
 	var node_name = "Player" + str(player_number) + "Spawns"
