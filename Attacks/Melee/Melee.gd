@@ -20,6 +20,7 @@ func initialize_visual() -> void:
 	sphereShape.radius = _attack_range
 	$CollisionShape.shape = sphereShape
 	$Visualization.scale = Vector3(_attack_range, _attack_range, _attack_range)
+	# TODO: define and use player color
 	#$Visualization.get_surface_material(0).albedo_color = Constants.character_colors[owning_player.id]
 	$Visualization.get_surface_material(0).albedo_color = Color.red
 
