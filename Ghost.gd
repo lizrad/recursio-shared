@@ -7,7 +7,6 @@ var _replaying = false
 var _current_frame = -1
 var dashing = false
 var ghost_index
-var spawn_point
 
 signal ghost_attack
 
