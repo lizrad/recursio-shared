@@ -19,6 +19,7 @@ func _ready():
 func reset():
 	for capture_point in _capture_points:
 		capture_point.reset()
+	toggle_capture_points(false)
 
 func get_spawn_points(player_number):
 	var node_name = "Player" + str(player_number) + "Spawns"
@@ -37,5 +38,6 @@ func get_capture_points():
 	return _capture_points
 
 func toggle_capture_points(toggle:bool)->void:
+	Logger.info("Toggling capture points "+("on"if toggle else "off")+".", "capture point")
 	for capture_point in _capture_points:
 		capture_point.active = toggle
