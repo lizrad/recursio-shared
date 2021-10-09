@@ -36,7 +36,7 @@ func _apply_frame(frame: Dictionary):
 	Logger.debug("Moving ghost to "+str(frame["P"]), "ghost")
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
-	if frame["D"]==Constants.DASH_START:
+	if frame["D"]==Enums.DashFrame.START:
 		dashing = true
-	if frame["D"]== Constants.DASH_END:
+	if frame["D"]== Enums.DashFrame.END:
 		dashing = false
