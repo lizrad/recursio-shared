@@ -6,9 +6,11 @@ var _start_time := -1
 var _replaying = false
 var _current_frame = -1
 var dashing = false
+var ghost_id
 
 func init(gameplay_record: Dictionary):
 	_record = gameplay_record.duplicate(true)
+	ghost_id = gameplay_record["G"]
 
 func start_replay(start_time):
 	_start_time = start_time
