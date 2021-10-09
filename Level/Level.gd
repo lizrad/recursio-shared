@@ -35,3 +35,7 @@ func get_spawn_points(player_number):
 
 func get_capture_points():
 	return _capture_points
+
+func toggle_capture_points(toggle:bool)->void:
+	for capture_point in _capture_points:
+		capture_point.active = toggle
