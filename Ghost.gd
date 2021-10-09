@@ -44,5 +44,6 @@ func _apply_frame(frame: Dictionary):
 
 func receive_hit():
 	Logger.info("Ghost was hit!", "attacking")
+	emit_signal("hit")
 	_replaying = false
 	# TODO: Play animation, make inactive, etc
