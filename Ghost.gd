@@ -45,8 +45,11 @@ func _apply_frame(frame: Dictionary):
 	if frame["D"]== Enums.DashFrame.END:
 		dashing = false
 	
-	if frame["A"] != Enums.ActionType.NONE:
-		emit_signal("ghost_attack", self, frame["A"])
+	if frame["A"] != Enums.AttackFrame.NONE:
+		if frame["A"] == Enums.AttackFrame.MELEE_START:
+			emit_signal("ghost_attack", self, Enums.ActionType.MELEE)
+		elif frame["A"] == Enums.AttackFrame.SHOOT_START:
+			emit_signal("ghost_attack", self, Enums.ActionType.SHOOT)
 
 
 func receive_hit():
