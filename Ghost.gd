@@ -40,3 +40,9 @@ func _apply_frame(frame: Dictionary):
 		dashing = true
 	if frame["D"]== Enums.DashFrame.END:
 		dashing = false
+
+
+func receive_hit():
+	Logger.info("Ghost was hit!", "attacking")
+	_replaying = false
+	# TODO: Play animation, make inactive, etc
