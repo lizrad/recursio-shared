@@ -53,7 +53,7 @@ func _physics_process(delta):
 	if _visual or (not _first_frame and not _continuosly_damaging):
 		var collider = get_collider()
 		if collider:
-			Logger.info("hit collider: %s" %[collider.get_class()] , "HitscanShot")
+			handle_hit(collider)
 	#		var hit_point = to_local(get_collision_point())
 	#		$LineRenderer.points[1] = hit_point if hit_point.length()<_bullet_range else Vector3(0,0,-_bullet_range)
 	#	else:
@@ -64,18 +64,17 @@ func _physics_process(delta):
 		_update_collision()
 
 
+func handle_hit(collider):
+	Logger.info("hit collider: %s" %[collider.get_class()] , "HitscanShot")
+	
+	if collider is CharacterBase:
+		assert(collider.has_method("receive_hit"))
+		if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
+			_hit_bodies_invincibilty_tracker[collider]=_damage_invincibility_time
+			collider.receive_hit()
+
+
 func _update_collision():
 	var collider = get_collider()
 	if collider:
-		# Update the line renderer no matter what it is
-		var hit_point = to_local(get_collision_point())
-		#$LineRenderer.points[1] = hit_point if hit_point.length()<_bullet_range else Vector3(0,0,-_bullet_range)
-		
-		# Shoot player if it was damagable
-		if collider.is_in_group("Damagable"):
-			assert(collider.has_method("receive_hit"))
-			if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
-				_hit_bodies_invincibilty_tracker[collider]=_damage_invincibility_time
-				collider.receive_hit(_attack_type_type, _damage,-transform.basis.z*_bounce_strength)
-	#else:
-	#	$LineRenderer.points[1] = Vector3(0,0,-_bullet_range)
+		handle_hit(collider)
