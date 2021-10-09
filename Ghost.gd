@@ -6,11 +6,15 @@ var _start_time := -1
 var _replaying = false
 var _current_frame = -1
 var dashing = false
-var ghost_id
+var ghost_index
+var spawn_point
 
 func init(gameplay_record: Dictionary):
 	_record = gameplay_record.duplicate(true)
-	ghost_id = gameplay_record["G"]
+	ghost_index = gameplay_record["G"]
+
+func stop_replay():
+	_replaying = false
 
 func start_replay(start_time):
 	_start_time = start_time
@@ -28,11 +32,11 @@ func _physics_process(delta):
 		_current_frame+=1
 
 
-func move_to_start_position():
-	_apply_frame(_record["F"][0])
+func move_to_spawn_position():
+	transform.origin = spawn_point
+	rotation.y = 0
 
 
-#TODO: use move_and_slide for this
 #TODO: also apply weapon and melee attacks
 func _apply_frame(frame: Dictionary):
 	Logger.debug("Moving ghost to "+str(frame["P"]), "ghost")
