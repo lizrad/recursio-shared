@@ -8,6 +8,8 @@ var _current_frame = -1
 var dashing = false
 var ghost_id
 
+signal ghost_attack
+
 func init(gameplay_record: Dictionary):
 	_record = gameplay_record.duplicate(true)
 	ghost_id = gameplay_record["G"]
@@ -42,6 +44,9 @@ func _apply_frame(frame: Dictionary):
 		dashing = true
 	if frame["D"]== Enums.DashFrame.END:
 		dashing = false
+	
+	if frame["A"] != Enums.ActionType.NONE:
+		emit_signal("ghost_attack", self, frame["A"])
 
 
 func receive_hit():
