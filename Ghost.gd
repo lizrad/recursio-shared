@@ -9,6 +9,8 @@ var dashing = false
 var ghost_index
 var spawn_point
 
+signal ghost_attack
+
 func init(gameplay_record: Dictionary):
 	_record = gameplay_record.duplicate(true)
 	ghost_index = gameplay_record["G"]
@@ -46,6 +48,12 @@ func _apply_frame(frame: Dictionary):
 		dashing = true
 	if frame["D"]== Enums.DashFrame.END:
 		dashing = false
+	
+	if frame["A"] != Enums.AttackFrame.NONE:
+		if frame["A"] == Enums.AttackFrame.MELEE_START:
+			emit_signal("ghost_attack", self, Enums.ActionType.MELEE)
+		elif frame["A"] == Enums.AttackFrame.SHOOT_START:
+			emit_signal("ghost_attack", self, Enums.ActionType.SHOOT)
 
 
 func receive_hit():

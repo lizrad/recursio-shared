@@ -13,4 +13,4 @@ enum WeaponType{
 	SHOOT, WALL
 }
 
-enum ActionType { SHOOT, DASH, MELEE }
+enum ActionType { NONE, SHOOT, DASH, MELEE }
