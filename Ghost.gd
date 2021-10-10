@@ -6,7 +6,6 @@ var _start_time := -1
 var _replaying = false
 var _current_frame = -1
 var dashing = false
-var ghost_index
 
 signal ghost_attack
 
