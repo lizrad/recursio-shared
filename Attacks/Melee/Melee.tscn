@@ -16,5 +16,3 @@ script = ExtResource( 1 )
 cast_shadow = 0
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
-
-[connection signal="body_entered" from="." to="." method="_on_Melee_body_entered"]

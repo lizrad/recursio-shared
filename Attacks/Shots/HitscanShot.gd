@@ -65,7 +65,7 @@ func _physics_process(delta):
 
 
 func handle_hit(collider):
-	Logger.info("hit collider: %s" %[collider.get_class()] , "HitscanShot")
+	Logger.debug("hit collider: %s" %[collider.get_class()] , "HitscanShot")
 	
 	if collider is CharacterBase:
 		assert(collider.has_method("receive_hit"))
