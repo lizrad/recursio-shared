@@ -12,14 +12,8 @@ var _continuously_damaging := false
 var _damage_invincibility_time := 0
 var _hit_bodies_invincibilty_tracker = {}
 
+
 func initialize_visual() -> void:
-	#_attack_time = attack_type.attack_time
-	
-	# TODO: could setup shape statically because does not change
-	var sphereShape = SphereShape.new()
-	sphereShape.radius = _attack_range
-	$CollisionShape.shape = sphereShape
-	$Visualization.scale = Vector3(_attack_range, _attack_range, _attack_range)
 	# TODO: define and use player color
 	#$Visualization.get_surface_material(0).albedo_color = Constants.character_colors[owning_player.id]
 	$Visualization.get_surface_material(0).albedo_color = Color.red
@@ -43,14 +37,17 @@ func _process(delta):
 		_hit_bodies_invincibilty_tracker[i]-=delta
 		_hit_bodies_invincibilty_tracker[i] = clamp(_hit_bodies_invincibilty_tracker[i],0,_damage_invincibility_time)
 
-func _hit_body(body) ->void:
-	if body.is_in_group("Damagable"):
-			assert(body.has_method("receive_hit"))
-			if (not _hit_bodies_invincibilty_tracker.has(body) or _hit_bodies_invincibilty_tracker[body] <=0):
-				_hit_bodies_invincibilty_tracker[body]=_damage_invincibility_time
-				print(str("Melee attack hit body named ",body.name))
-				_hit_something = true
-				#body.receive_hit(AttackType.AttackTypeType.NORMAL, _damage, (body.global_transform.origin-global_transform.origin).normalized()*_bounce_strength)
+
+# TODO: Identical to the function in HitscanShot - consider using a shared parent class?
+func _hit_body(collider):
+	Logger.debug("hit collider: %s" %[collider.get_class()] , "Melee")
+	
+	if collider is CharacterBase:
+		assert(collider.has_method("receive_hit"))
+		if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
+			_hit_bodies_invincibilty_tracker[collider]=_damage_invincibility_time
+			collider.receive_hit()
+
 
 func _physics_process(delta):
 	var bodies = get_overlapping_bodies()
@@ -64,7 +61,7 @@ func _physics_process(delta):
 		for body in bodies:
 			if _hit_something:
 				return
-			if not body.is_in_group("Damagable"):
+			if not body is CharacterBase:
 				continue
 			if body == _owning_player:
 				continue
@@ -79,13 +76,13 @@ func _physics_process(delta):
 		var other_player
 		print("hit bodies size "+str(bodies.size()))
 		for body in bodies:
-			if not body.is_in_group("Damagable"):
+			if not body is CharacterBase:
 				continue
 			if body == _owning_player:
 				continue
 			print("hit "+body.name)
 			# make sure we hit other player last
-			if body.is_player():
+			if body is Player:
 				print ("found other player")
 				other_player = body
 				continue

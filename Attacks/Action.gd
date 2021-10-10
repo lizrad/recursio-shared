@@ -71,13 +71,12 @@ func set_active(value: bool, user: Spatial, scene_tree: SceneTree) -> void:
 		pass
 
 	activation_time = OS.get_ticks_msec()
+	
 	# fire actual action -> TODO: maybe as class hierarchy?
 	if attack:
 		Logger.info("instancing new attack", "actions")
 		var spawn = attack.instance()
 		spawn.initialize(user)
-		# TODO: decide where to add child; adapt current player rotation
-		#spawn.global_transform = global_transform
 		spawn.global_transform = user.global_transform
 		scene_tree.get_root().add_child(spawn);
 
