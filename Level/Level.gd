@@ -38,6 +38,6 @@ func get_capture_points():
 	return _capture_points
 
 func toggle_capture_points(toggle:bool)->void:
-	Logger.info("Toggling capture points "+("on"if toggle else "off")+".", "capture point")
+	Logger.info("Toggling capture points "+("on"if toggle else "off")+".", "capture_point")
 	for capture_point in _capture_points:
 		capture_point.active = toggle
