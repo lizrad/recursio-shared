@@ -17,5 +17,6 @@ var all_actions = [ shot, wall, melee, dash ]
 onready var types_to_actions = { 
 	Enums.ActionType.SHOOT: shot, 
 	Enums.ActionType.MELEE: melee, 
-	Enums.ActionType.DASH: dash
+	Enums.ActionType.DASH: dash,
+	Enums.ActionType.WALL: wall
 }
