@@ -43,7 +43,7 @@ func _init(act_name: String, ammo: int, cd: float, charge: float, act_max: int, 
 	attack = act_scene
 
 
-func set_active(value: bool, user: Spatial, scene_tree: SceneTree) -> void:
+func set_active(value: bool, user: Spatial, scene_tree: SceneTree, action_scene_parent: Node) -> void:
 	Logger.debug("Action " + name + " set active for value: " + str(value), "actions")
 
 	if not value:
@@ -74,11 +74,11 @@ func set_active(value: bool, user: Spatial, scene_tree: SceneTree) -> void:
 	
 	# fire actual action -> TODO: maybe as class hierarchy?
 	if attack:
-		Logger.info("instancing new attack", "actions")
+		Logger.info("instancing new attack named "+name, "actions")
 		var spawn = attack.instance()
 		spawn.initialize(user)
 		spawn.global_transform = user.global_transform
-		scene_tree.get_root().add_child(spawn);
+		action_scene_parent.add_child(spawn);
 
 		# TODO: if has recoil configured -> apply on player
 
