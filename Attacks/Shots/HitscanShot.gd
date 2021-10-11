@@ -3,7 +3,7 @@ extends RayCast
 # TODO: combine attack common values
 var _continuosly_damaging := false
 var _damage_invincibility_time := 1.1
-var _bullet_range := 50
+var _bullet_range := 5
 var _attack_time := 0.5
 var _owning_player
 var _damage := 10.0
@@ -21,6 +21,8 @@ func _init() -> void:
 #func initialize(owning_player, attack_type) ->void:
 func initialize(owning_player) -> void:
 	_visual = true
+	$Visualisation.scale.y = _bullet_range*0.5
+	$Visualisation.transform.origin.z = -_bullet_range*0.5
 	#_damage = attack_type.damage
 	#_bounce_strength = attack_type.bounce_strength
 	#_bullet_range = attack_type.attack_range
