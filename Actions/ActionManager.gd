@@ -52,7 +52,7 @@ func set_active(action: Action, value: bool, user: Spatial, action_scene_parent:
 
 	if not value:
 		action.activation_time = 0
-		emit_signal("action_released")
+		action.emit_signal("action_released")
 		return
 
 	if action.blocked:
@@ -86,7 +86,7 @@ func set_active(action: Action, value: bool, user: Spatial, action_scene_parent:
 
 		# TODO: if has recoil configured -> apply on player
 
-	emit_signal("action_triggered")
+	action.emit_signal("action_triggered")
 
 	if action.ammunition > 0:
 		action.ammunition -= 1
@@ -101,5 +101,5 @@ func set_active(action: Action, value: bool, user: Spatial, action_scene_parent:
 	if action.recharge_time > 0 and action.ammunition < action.max_ammo:
 		yield(get_tree().create_timer(action.recharge_time), "timeout")
 		action.ammunition += 1
-		emit_signal("ammunition_changed", action.ammunition)
+		action.emit_signal("ammunition_changed", action.ammunition)
 
