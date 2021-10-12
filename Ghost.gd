@@ -1,11 +1,13 @@
 extends CharacterBase
 class_name Ghost
 
+onready var _collision_shape: CollisionShape = get_node("CollisionShape")
+
 var _record := {}
 var _start_time := -1
 var _replaying = false
 var _current_frame = -1
-var dashing = false
+var _dashing = false
 
 signal ghost_attack
 
@@ -43,9 +45,9 @@ func _apply_frame(frame: Dictionary):
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
 	if frame["D"]==Enums.DashFrame.START:
-		dashing = true
+		_dashing = true
 	if frame["D"]== Enums.DashFrame.END:
-		dashing = false
+		_dashing = false
 	
 	if frame["A"] != Enums.AttackFrame.NONE:
 		if frame["A"] == Enums.AttackFrame.MELEE_START:
@@ -58,4 +60,7 @@ func receive_hit():
 	Logger.info("Ghost was hit!", "attacking")
 	emit_signal("hit")
 	_replaying = false
-	# TODO: Play animation, make inactive, etc
+	# Disable collsions
+	_collision_shape.disabled = true
+	# Show ghost as dead
+	rotate_z(90)
