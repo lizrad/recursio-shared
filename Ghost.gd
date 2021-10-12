@@ -1,11 +1,13 @@
 extends CharacterBase
 class_name Ghost
 
+onready var _collision_shape: CollisionShape = get_node("CollisionShape")
+
 var _record := {}
 var _start_time := -1
 var _replaying = false
 var _current_frame = -1
-var dashing = false
+var _dashing = false
 
 signal ghost_attack
 
@@ -42,10 +44,11 @@ func _apply_frame(frame: Dictionary):
 	Logger.debug("Moving ghost to "+str(frame["P"]), "ghost")
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
+	
 	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_START:
-		dashing = true
+		_dashing = true
 	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_END:
-		dashing = false
+		_dashing = false
 	
 	if frame["A"] != ActionManager.Trigger.NONE:
 		if frame["A"] == ActionManager.Trigger.DEFAULT_ATTACK_START:
@@ -58,4 +61,7 @@ func receive_hit():
 	Logger.info("Ghost was hit!", "attacking")
 	emit_signal("hit")
 	_replaying = false
-	# TODO: Play animation, make inactive, etc
+	# Disable collsions
+	_collision_shape.disabled = true
+	# Show ghost as dead
+	rotate_z(90)
