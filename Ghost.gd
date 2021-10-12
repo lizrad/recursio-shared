@@ -9,6 +9,8 @@ var _replaying = false
 var _current_frame = -1
 var _dashing = false
 
+var action_manager
+
 signal ghost_attack
 
 func init(gameplay_record: Dictionary):
@@ -48,16 +50,16 @@ func _apply_frame(frame: Dictionary):
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
 	
-	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_START:
+	if frame["D"] == action_manager.Trigger.SPECIAL_MOVEMENT_START:
 		_dashing = true
-	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_END:
+	if frame["D"] == action_manager.Trigger.SPECIAL_MOVEMENT_END:
 		_dashing = false
 	
-	if frame["A"] != ActionManager.Trigger.NONE:
-		if frame["A"] == ActionManager.Trigger.DEFAULT_ATTACK_START:
-			emit_signal("ghost_attack", self, ActionManager.Trigger.DEFAULT_ATTACK_START)
-		elif frame["A"] == ActionManager.Trigger.FIRE_START:
-			emit_signal("ghost_attack", self, ActionManager.Trigger.FIRE_START)
+	if frame["A"] != action_manager.Trigger.NONE:
+		if frame["A"] == action_manager.Trigger.DEFAULT_ATTACK_START:
+			emit_signal("ghost_attack", self, action_manager.Trigger.DEFAULT_ATTACK_START)
+		elif frame["A"] == action_manager.Trigger.FIRE_START:
+			emit_signal("ghost_attack", self, action_manager.Trigger.FIRE_START)
 
 
 func receive_hit():
