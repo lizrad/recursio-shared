@@ -42,16 +42,16 @@ func _apply_frame(frame: Dictionary):
 	Logger.debug("Moving ghost to "+str(frame["P"]), "ghost")
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
-	if frame["D"]==Enums.DashFrame.START:
+	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_START:
 		dashing = true
-	if frame["D"]== Enums.DashFrame.END:
+	if frame["D"] == ActionManager.Trigger.SPECIAL_MOVEMENT_END:
 		dashing = false
 	
-	if frame["A"] != Enums.AttackFrame.NONE:
-		if frame["A"] == Enums.AttackFrame.MELEE_START:
-			emit_signal("ghost_attack", self, Enums.ActionType.MELEE)
-		elif frame["A"] == Enums.AttackFrame.SHOOT_START:
-			emit_signal("ghost_attack", self, Enums.ActionType.SHOOT)
+	if frame["A"] != ActionManager.Trigger.NONE:
+		if frame["A"] == ActionManager.Trigger.DEFAULT_ATTACK_START:
+			emit_signal("ghost_attack", self, ActionManager.Trigger.DEFAULT_ATTACK_START)
+		elif frame["A"] == ActionManager.Trigger.FIRE_START:
+			emit_signal("ghost_attack", self, ActionManager.Trigger.FIRE_START)
 
 
 func receive_hit():

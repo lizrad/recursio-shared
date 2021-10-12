@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Shared/Actions/Action.gd" type="Script" id=1]
+[ext_resource path="res://Shared/Actions/Shots/Wall.tscn" type="PackedScene" id=2]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource( 1 )
+name = "Wall"
+max_ammo = 2
+cooldown = 0.5
+recharge_time = -1.0
+activation_max = 0
+attack = ExtResource( 2 )
