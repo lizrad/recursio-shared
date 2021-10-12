@@ -3,26 +3,34 @@ extends StaticBody
 
 var placed_by_body
 var _current_health := 5
+var round_index
 
 func _init() -> void:
 	Logger.info("_init action", "Wall")
 
 
 func _ready():
-	$KillGhostArea.connect("body_entered", self, "_hit_body")
-	$KillGhostArea.connect("area_entered", self, "_hit_area")
+	$KillGhostArea.connect("body_entered", self, "handle_hit")
 
 
 func initialize(owning_player) -> void:
 	initialize_visual(owning_player)
-	# TODO: need to register wall in World/Level to be able to delete?
-	#get_tree().get_root().get_node("World").register_wall(self)
+	placed_by_body = owning_player
+	round_index = owning_player.round_index
 
 
 func initialize_visual(owning_player) ->void:
 	# TODO: define and use player color
 	#$MeshInstance.material_override.albedo_color = Constants.character_colors[owning_player.id]
 	$MeshInstance.material_override.albedo_color = Color.red
+
+
+func handle_hit(collider):
+	Logger.debug("hit collider: %s" %[collider.get_class()] , "HitscanShot")
+	
+	if collider is Ghost and not collider == placed_by_body \
+			and collider.round_index < round_index:
+		collider.receive_hit()
 
 
 func _hit_body(body) ->void:

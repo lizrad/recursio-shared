@@ -22,6 +22,9 @@ func start_replay(start_time):
 	_start_time = start_time
 	_replaying = true
 	_current_frame = 0
+	
+	_collision_shape.disabled = false
+	rotation = Vector3.ZERO
 
 func _physics_process(delta):
 	if not _replaying:
