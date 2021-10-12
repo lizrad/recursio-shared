@@ -37,16 +37,20 @@ func get_action(action_type):
 	return instance
 
 
-func get_action_for_trigger(trigger, ghost_index):
+func get_action_type_for_trigger(trigger, ghost_index):
 	if trigger == Trigger.FIRE_START:
 		if ghost_index == Constants.get_value("ghosts", "wall_placing_ghost_index"):
-			return get_action(ActionType.WALL)
+			return ActionType.WALL
 		else:
-			return get_action(ActionType.HITSCAN)
+			return ActionType.HITSCAN
 	elif trigger == Trigger.SPECIAL_MOVEMENT_START:
-		return get_action(ActionType.DASH)
+		return ActionType.DASH
 	elif trigger == Trigger.DEFAULT_ATTACK_START:
-		return get_action(ActionType.MELEE)
+		return ActionType.MELEE
+
+
+func get_action_for_trigger(trigger, ghost_index):
+	return get_action(get_action_type_for_trigger(trigger, ghost_index))
 
 
 func clear_action_instances():

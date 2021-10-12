@@ -12,7 +12,7 @@ export var img_bullet: StreamTexture
 export var player_accessory: PackedScene
 export var attack: PackedScene
 
-var ammunition # FIXME how to set initially
+var ammunition 
 var blocked := false
 var activation_time: int  # ts in ticks when the action was initially triggered
 
