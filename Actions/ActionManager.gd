@@ -27,6 +27,8 @@ var action_resources = {
 	ActionType.MELEE: preload("res://Shared/Actions/Melee.tres")
 }
 
+var _instanced_actions = []
+
 
 func get_action(action_type):
 	var instance = action_resources[action_type].duplicate()
@@ -45,6 +47,13 @@ func get_action_for_trigger(trigger, ghost_index):
 		return get_action(ActionType.DASH)
 	elif trigger == Trigger.DEFAULT_ATTACK_START:
 		return get_action(ActionType.MELEE)
+
+
+func clear_action_instances():
+	for instance in _instanced_actions:
+		instance.queue_free()
+	
+	_instanced_actions.clear()
 
 
 func set_active(action: Action, value: bool, user: Spatial, action_scene_parent: Node) -> void:
@@ -82,7 +91,8 @@ func set_active(action: Action, value: bool, user: Spatial, action_scene_parent:
 		var spawn = action.attack.instance()
 		spawn.initialize(user)
 		spawn.global_transform = user.global_transform
-		action_scene_parent.add_child(spawn);
+		action_scene_parent.add_child(spawn)
+		_instanced_actions.append(spawn)
 
 		# TODO: if has recoil configured -> apply on player
 
