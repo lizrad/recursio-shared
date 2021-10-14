@@ -13,9 +13,10 @@ var action_manager
 
 signal ghost_attack
 
-func init(gameplay_record: Dictionary):
+func init(gameplay_record: Dictionary, ghost_color: Color):
 	_record = gameplay_record.duplicate(true)
 	ghost_index = gameplay_record["G"]
+	$Mesh_Body.material_override.set_shader_param("color", ghost_color)
 
 func stop_replay():
 	_replaying = false
