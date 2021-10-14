@@ -31,8 +31,10 @@ func start_replay(start_time):
 func _physics_process(delta):
 	if not _replaying:
 		return
+
 	if _current_frame >= _record["F"].size():
 		return
+
 	var time_diff = _start_time - _record["T"]
 	while _current_frame<_record["F"].size() and _record["F"][_current_frame]["T"]+time_diff<=Server.get_server_time() :
 		_apply_frame(_record["F"][_current_frame])
@@ -44,12 +46,11 @@ func move_to_spawn_position():
 	rotation.y = 0
 
 
-#TODO: also apply weapon and melee attacks
 func _apply_frame(frame: Dictionary):
 	Logger.debug("Moving ghost to "+str(frame["P"]), "ghost")
 	transform.origin = frame["P"]
 	rotation.y = frame["R"]
-	
+
 	if frame["D"] == action_manager.Trigger.SPECIAL_MOVEMENT_START:
 		_dashing = true
 	if frame["D"] == action_manager.Trigger.SPECIAL_MOVEMENT_END:
@@ -65,6 +66,7 @@ func _apply_frame(frame: Dictionary):
 func receive_hit():
 	if not is_inside_tree():
 		return
+
 	Logger.info("Ghost was hit!", "attacking")
 	emit_signal("hit")
 	_replaying = false
