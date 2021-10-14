@@ -20,9 +20,8 @@ func _init() -> void:
 
 #func initialize(owning_player, attack_type) ->void:
 func initialize(owning_player) -> void:
+	Logger.info("initialize action", "HitscanShot")
 	_visual = true
-	$Visualisation.scale.y = _bullet_range*0.5
-	$Visualisation.transform.origin.z = -_bullet_range*0.5
 	#_damage = attack_type.damage
 	#_bounce_strength = attack_type.bounce_strength
 	#_bullet_range = attack_type.attack_range
@@ -68,7 +67,10 @@ func _physics_process(delta):
 
 func handle_hit(collider):
 	Logger.debug("hit collider: %s" %[collider.get_class()] , "HitscanShot")
-	
+	var collision_point = get_collision_point()
+	var distance = (collision_point- global_transform.origin).length()
+	$Visualisation.scale.y = distance*0.5
+	$Visualisation.transform.origin.z = -distance*0.5
 	if collider is CharacterBase:
 		assert(collider.has_method("receive_hit"))
 		if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
@@ -77,6 +79,10 @@ func handle_hit(collider):
 
 
 func _update_collision():
+	$Visualisation.scale.y = _bullet_range*0.5
+	$Visualisation.transform.origin.z = -_bullet_range*0.5
 	var collider = get_collider()
 	if collider:
+		var collision_point = get_collision_point()
+		Logger.debug("Collision Point: "+str(collision_point), "HitscanShot")
 		handle_hit(collider)
